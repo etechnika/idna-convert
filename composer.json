@@ -1,0 +1,25 @@
+{
+    "name": "etechnika/idna-convert",
+    "type": "library",
+    "version": "0.0.1",
+    "description": "Etechnika.eu idna-convert",
+    "keywords": ["lib"],
+    "homepage": "https://github.com/etechnika/idna-convert",
+    "license": "LGPL",
+    "authors": [
+        {
+            "name": "Tomasz Rutkowski",
+            "email": "tomasz@etechnika.eu",
+            "homepage": "http://etechnika.eu",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Etechnika": "src"
+        }
+    }
+}
