@@ -5,7 +5,7 @@
     "description": "Etechnika.eu idna-convert",
     "keywords": ["lib"],
     "homepage": "https://github.com/etechnika/idna-convert",
-    "license": "LGPL",
+    "license": "LGPL-2.1",
     "authors": [
         {
             "name": "Tomasz Rutkowski",
@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Etechnika": "src"
+            "Etechnika\\IdnaConvert": "src/Etechnika/IdnaConvert"
         }
     }
 }
