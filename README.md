@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/etechnika/idna-convert.png)](https://travis-ci.org/etechnika/idna-convert)
+
 idna-convert
 ============
 
