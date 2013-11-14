@@ -1,7 +1,6 @@
 {
     "name": "etechnika/idna-convert",
     "type": "library",
-    "version": "0.0.1",
     "description": "Etechnika.eu idna-convert",
     "keywords": ["lib"],
     "homepage": "https://github.com/etechnika/idna-convert",
