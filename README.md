@@ -1,4 +1,7 @@
-[![Build Status](https://travis-ci.org/etechnika/idna-convert.png)](https://travis-ci.org/etechnika/idna-convert)
+| Branch | Unit Tests | Coverage |
+| ------ | ---------- | -------- |
+| [![Latest Stable Version](https://poser.pugx.org/etechnika/idna-convert/v/stable.png)](https://packagist.org/packages/etechnika/idna-convert) | [![Build Status](https://travis-ci.org/etechnika/idna-convert.png?branch=master)](https://travis-ci.org/etechnika/idna-convert) | [![Coverage Status](https://coveralls.io/repos/etechnika/idna-convert/badge.png?branch=master)](https://coveralls.io/r/etechnika/idna-convert?branch=master)|
+
 idna-convert
 ============
 
