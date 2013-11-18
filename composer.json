@@ -18,7 +18,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
-        "phpunit/php-code-coverage": "1.2.*"
+        "phpunit/php-code-coverage": "1.2.*",
+        "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
         "psr-0": {

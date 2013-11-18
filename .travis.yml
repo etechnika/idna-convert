@@ -11,3 +11,7 @@ script:
   - mkdir -p build/logs
   - php vendor/bin/phpunit -c travis.phpunit.xml
 
+after_script:
+  - php vendor/bin/coveralls
+  # or enable logging
+  #- php vendor/bin/coveralls -v
