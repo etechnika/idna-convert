@@ -19,27 +19,25 @@ class IdnaConvert extends idna_convert
         return new static();
     }
 
-
     /**
      * Decode domain name
      *
-     * @param string $strValue
+     * @param  string $strValue
      * @return string
      */
-    public static function decodeString( $strValue )
+    public static function decodeString($strValue)
     {
-        return static::get()->decode( $strValue );
+        return static::get()->decode($strValue);
     }
-
 
     /**
      * Encode domain name
      *
-     * @param string $strValue
+     * @param  string $strValue
      * @return string
      */
-    public static function encodeString( $strValue )
+    public static function encodeString($strValue)
     {
-        return static::get()->encode( $strValue );
+        return static::get()->encode($strValue);
     }
 }

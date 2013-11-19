@@ -1,0 +1,18 @@
+echo "--------- clean logs ---------"
+rm -Rf ../build/logs/*
+echo "--------- php-cs-fixer ---------"
+php -n ../vendor/bin/php-cs-fixer fix -v --dry-run --level=all ../src
+echo "--------- phpcs ---------"
+php ../vendor/bin/phpcs --report=checkstyle --standard=../build/config/phpcs.xml --ignore=*.html.php,*.config.php,*.twig.php ../src
+#php ../vendor/bin/phpcs --report=full --standard=../build/config/phpcs.xml --ignore=*.html.php,*.config.php,*.twig.php ../src
+echo "--------- phpcpd ---------"
+php ../vendor/bin/phpcpd ../src
+echo "-------- phpunit ---------"
+php ../vendor/bin/phpunit -c ../phpunit.xml.dist
+echo "-------- pdepend ---------"
+php ../vendor/bin/pdepend --jdepend-chart=../build/logs/jdepend_img_1 ../src
+echo "------- phploc ---------"
+php ../vendor/bin/phploc ../src
+echo "------- phpmd ---------"
+#php ../vendor/bin/phpmd ../src text codesize,unusedcode,naming
+php ../vendor/bin/phpmd ../src text ../build/config/phpmd.xml

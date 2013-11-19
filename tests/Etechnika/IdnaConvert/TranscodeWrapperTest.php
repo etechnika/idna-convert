@@ -39,9 +39,9 @@ class TranscodeWrapperTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Etechnika\IdnaConvert\TranscodeWrapper::encode_utf8
-     * @todo   Implement testEncode_utf8().
+     * @todo   Implement testEncodeUtf8().
      */
-    public function testEncode_utf8()
+    public function testEncodeUtf8()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -52,9 +52,9 @@ class TranscodeWrapperTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Etechnika\IdnaConvert\TranscodeWrapper::decode_utf8
-     * @todo   Implement testDecode_utf8().
+     * @todo   Implement testDecodeUtf8().
      */
-    public function testDecode_utf8()
+    public function testDecodeUtf8()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -65,9 +65,9 @@ class TranscodeWrapperTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Etechnika\IdnaConvert\TranscodeWrapper::map_w1252_iso8859_1
-     * @todo   Implement testMap_w1252_iso8859_1().
+     * @todo   Implement testMapW1252Iso88591().
      */
-    public function testMap_w1252_iso8859_1()
+    public function testMapW1252Iso88591()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -78,9 +78,9 @@ class TranscodeWrapperTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Etechnika\IdnaConvert\TranscodeWrapper::map_iso8859_1_w1252
-     * @todo   Implement testMap_iso8859_1_w1252().
+     * @todo   Implement testMapIso88591W1252().
      */
-    public function testMap_iso8859_1_w1252()
+    public function testMapIso88591W1252()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
