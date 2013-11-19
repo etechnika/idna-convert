@@ -1,5 +1,6 @@
 !.gitignore
 vendor
 composer.lock
-build/
+build/coverage
+build/logs
 travis/
