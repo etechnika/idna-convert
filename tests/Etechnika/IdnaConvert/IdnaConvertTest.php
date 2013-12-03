@@ -68,6 +68,7 @@ class IdnaConvertTest extends \PHPUnit_Framework_TestCase
     public function providerDecodeString()
     {
         return array(
+            array( 'xn--w-uga1v8h.pl', 'żółw.pl', true ), // PL idn
             array( 'xn--p1ai', 'рф', true ), // Russia
             array( 'xn--mgbayh7gpa', 'الاردن.', false ), // Jordan
             array( 'xn--mgbayh7gpa', '.الاردن.', true ), // Jordan
@@ -97,6 +98,7 @@ class IdnaConvertTest extends \PHPUnit_Framework_TestCase
     public function providerEncodeString()
     {
         return array(
+            array( 'żółw.pl', 'xn--w-uga1v8h.pl', true ), // PL idn
             array( 'рф', 'xn--p1ai', true ), // Russia
             array( 'الاردن.', 'xn--mgbayh7gpa', false ), // Jordan
             array( '.الاردن.', 'xn--mgbayh7gpa', true ), // Jordan
