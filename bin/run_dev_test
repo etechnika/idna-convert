@@ -1,7 +1,7 @@
 echo "--------- clean logs ---------"
 rm -Rf ../build/logs/*
 echo "--------- php-cs-fixer ---------"
-php -n ../vendor/bin/php-cs-fixer fix -v --dry-run --level=all ../src
+php -n ../vendor/bin/php-cs-fixer fix -v --dry-run --level=all src --fixers=linefeed,short_tag,indentation,trailing_spaces,unused_use,phpdoc_params,short_tag,return,visibility,php_closing_tag,braces,extra_empty_lines,function_declaration,include,controls_spaces,psr0,elseif,eof_ending
 echo "--------- phpcs ---------"
 php ../vendor/bin/phpcs --report=checkstyle --standard=../build/config/phpcs.xml --ignore=*.html.php,*.config.php,*.twig.php ../src
 #php ../vendor/bin/phpcs --report=full --standard=../build/config/phpcs.xml --ignore=*.html.php,*.config.php,*.twig.php ../src
