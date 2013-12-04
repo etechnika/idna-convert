@@ -139,16 +139,16 @@
 
   <target name="vendors" description="Update vendors">
     <exec executable="php" failonerror="true">
-        <arg value="composer.phar" />
+        <arg value="bin/composer.phar" />
         <arg value="update" />
     </exec>
   </target>
 
-<!--  <target name="parameters" description="Copy parameters">
-    <exec executable="cp" failonerror="true">
+  <target name="parameters" description="Copy parameters">
+<!--    <exec executable="cp" failonerror="true">
       <arg path="app/config/parameters.yml.dist" />
       <arg path="app/config/parameters.yml" />
-    </exec>
-  </target>-->
+    </exec>-->
+  </target>
 
 </project>
