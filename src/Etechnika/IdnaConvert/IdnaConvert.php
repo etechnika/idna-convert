@@ -22,7 +22,8 @@ class IdnaConvert extends idna_convert
     /**
      * Decode domain name
      *
-     * @param  string $strValue
+     * @param string $strValue
+     *
      * @return string
      */
     public static function decodeString($strValue)
@@ -33,7 +34,8 @@ class IdnaConvert extends idna_convert
     /**
      * Encode domain name
      *
-     * @param  string $strValue
+     * @param string $strValue
+     *
      * @return string
      */
     public static function encodeString($strValue)
