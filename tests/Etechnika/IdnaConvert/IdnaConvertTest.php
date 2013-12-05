@@ -47,56 +47,74 @@ class IdnaConvertTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param string $strIn
+     * @param string $strOut
+     * @param string $booTrue
+     *
      * @covers Etechnika\IdnaConvert\IdnaConvert::decodeString
      * @dataProvider providerDecodeString
      */
     public function testDecodeString($strIn, $strOut, $booTrue)
     {
         if ($booTrue) {
-            $strOut === IdnaConvert::decodeString( $strIn ) ? $this->assertTrue( true ) : $this->assertFalse( false );
+            $strOut === IdnaConvert::decodeString($strIn) ? $this->assertTrue(true) : $this->assertFalse(false);
         } else {
-            $strOut !== IdnaConvert::decodeString( $strIn ) ? $this->assertTrue( true ) : $this->assertFalse( false );
+            $strOut !== IdnaConvert::decodeString($strIn) ? $this->assertTrue(true) : $this->assertFalse(false);
         }
     }
 
+    /**
+     * Data provider
+     *
+     * @return array
+     */
     public function providerDecodeString()
     {
         return array(
-            array( 'xn--w-uga1v8h.pl', 'żółw.pl', true ), // PL idn
-            array( 'xn--p1ai', 'рф', true ), // Russia
-            array( 'xn--mgbayh7gpa', 'الاردن.', false ), // Jordan
-            array( 'xn--mgbayh7gpa', '.الاردن.', true ), // Jordan
-            array( 'a.xn--mgbayh7gpa', 'a.الاردن.', true ), // Jordan
-            array( 'xn--mgbayh7gpa', 'الارد', true ),
-            array( 'xn--mgb9awbf.', 'عمان.', true ),
-            array( 'xn--clchc0ea0b2g2a9gcd', '.சிங்கப்பூர்"', true ),
+            array('xn--w-uga1v8h.pl', 'żółw.pl', true), // PL idn
+            array('xn--p1ai', 'рф', true), // Russia
+            array('xn--mgbayh7gpa', 'الاردن.', false), // Jordan
+            array('xn--mgbayh7gpa', '.الاردن.', true), // Jordan
+            array('a.xn--mgbayh7gpa', 'a.الاردن.', true), // Jordan
+            array('xn--mgbayh7gpa', 'الارد', true),
+            array('xn--mgb9awbf.', 'عمان.', true),
+            array('xn--clchc0ea0b2g2a9gcd', '.சிங்கப்பூர்"', true),
         );
     }
 
     /**
+     * @param string $strIn
+     * @param string $strOut
+     * @param string $booTrue
+     *
      * @covers Etechnika\IdnaConvert\IdnaConvert::encode
      * @dataProvider providerEncodeString
      */
     public function testEncodeString($strIn, $strOut, $booTrue)
     {
         if ($booTrue) {
-            $strOut === IdnaConvert::encodeString( $strIn ) ? $this->assertTrue( true ) : $this->assertFalse( false );
+            $strOut === IdnaConvert::encodeString($strIn) ? $this->assertTrue(true) : $this->assertFalse(false);
         } else {
-            $strOut !== IdnaConvert::encodeString( $strIn ) ? $this->assertTrue( true ) : $this->assertFalse( false );
+            $strOut !== IdnaConvert::encodeString($strIn) ? $this->assertTrue(true) : $this->assertFalse(false);
         }
     }
 
+    /**
+     * Data provider
+     *
+     * @return array
+     */
     public function providerEncodeString()
     {
         return array(
-            array( 'żółw.pl', 'xn--w-uga1v8h.pl', true ), // PL idn
-            array( 'рф', 'xn--p1ai', true ), // Russia
-            array( 'الاردن.', 'xn--mgbayh7gpa', false ), // Jordan
-            array( '.الاردن.', 'xn--mgbayh7gpa', true ), // Jordan
-            array( 'a.الاردن.', 'a.xn--mgbayh7gpa', true ), // Jordan
-            array( 'الارد', 'xn--mgbayh7gpa', true ),
-            array( 'عمان.', 'xn--mgb9awbf.', true ),
-            array( '.சிங்கப்பூர்"', 'xn--clchc0ea0b2g2a9gcd', true ),
+            array('żółw.pl', 'xn--w-uga1v8h.pl', true), // PL idn
+            array('рф', 'xn--p1ai', true), // Russia
+            array('الاردن.', 'xn--mgbayh7gpa', false), // Jordan
+            array('.الاردن.', 'xn--mgbayh7gpa', true), // Jordan
+            array('a.الاردن.', 'a.xn--mgbayh7gpa', true), // Jordan
+            array('الارد', 'xn--mgbayh7gpa', true),
+            array('عمان.', 'xn--mgb9awbf.', true),
+            array('.சிங்கப்பூர்"', 'xn--clchc0ea0b2g2a9gcd', true),
         );
     }
 }
