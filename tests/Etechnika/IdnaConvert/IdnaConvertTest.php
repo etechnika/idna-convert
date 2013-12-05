@@ -16,7 +16,6 @@ class IdnaConvertTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
-
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
@@ -26,7 +25,6 @@ class IdnaConvertTest extends \PHPUnit_Framework_TestCase
         $this->object = new IdnaConvert;
     }
 
-
     /**
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
@@ -35,7 +33,6 @@ class IdnaConvertTest extends \PHPUnit_Framework_TestCase
     {
 
     }
-
 
     /**
      * @covers Etechnika\IdnaConvert\IdnaConvert::get
@@ -49,21 +46,18 @@ class IdnaConvertTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-
     /**
      * @covers Etechnika\IdnaConvert\IdnaConvert::decodeString
      * @dataProvider providerDecodeString
      */
-    public function testDecodeString( $strIn, $strOut, $booTrue )
+    public function testDecodeString($strIn, $strOut, $booTrue)
     {
-        if ( $booTrue ) {
+        if ($booTrue) {
             $strOut === IdnaConvert::decodeString( $strIn ) ? $this->assertTrue( true ) : $this->assertFalse( false );
-        }
-        else {
+        } else {
             $strOut !== IdnaConvert::decodeString( $strIn ) ? $this->assertTrue( true ) : $this->assertFalse( false );
         }
     }
-
 
     public function providerDecodeString()
     {
@@ -79,21 +73,18 @@ class IdnaConvertTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-
     /**
      * @covers Etechnika\IdnaConvert\IdnaConvert::encode
      * @dataProvider providerEncodeString
      */
-    public function testEncodeString( $strIn, $strOut, $booTrue )
+    public function testEncodeString($strIn, $strOut, $booTrue)
     {
-        if ( $booTrue ) {
+        if ($booTrue) {
             $strOut === IdnaConvert::encodeString( $strIn ) ? $this->assertTrue( true ) : $this->assertFalse( false );
-        }
-        else {
+        } else {
             $strOut !== IdnaConvert::encodeString( $strIn ) ? $this->assertTrue( true ) : $this->assertFalse( false );
         }
     }
-
 
     public function providerEncodeString()
     {

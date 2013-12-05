@@ -16,7 +16,6 @@ class TranscodeWrapperTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
-
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
@@ -26,7 +25,6 @@ class TranscodeWrapperTest extends \PHPUnit_Framework_TestCase
         $this->object = new TranscodeWrapper;
     }
 
-
     /**
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
@@ -35,7 +33,6 @@ class TranscodeWrapperTest extends \PHPUnit_Framework_TestCase
     {
 
     }
-
 
     /**
      * @covers Etechnika\IdnaConvert\TranscodeWrapper::encode_utf8
@@ -49,7 +46,6 @@ class TranscodeWrapperTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-
     /**
      * @covers Etechnika\IdnaConvert\TranscodeWrapper::decode_utf8
      * @todo   Implement testDecodeUtf8().
@@ -62,7 +58,6 @@ class TranscodeWrapperTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-
     /**
      * @covers Etechnika\IdnaConvert\TranscodeWrapper::map_w1252_iso8859_1
      * @todo   Implement testMapW1252Iso88591().
@@ -74,7 +69,6 @@ class TranscodeWrapperTest extends \PHPUnit_Framework_TestCase
             'This test has not been implemented yet.'
         );
     }
-
 
     /**
      * @covers Etechnika\IdnaConvert\TranscodeWrapper::map_iso8859_1_w1252
