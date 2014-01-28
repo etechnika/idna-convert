@@ -30,6 +30,7 @@
         <delete dir="${builddir}/logs"/>
         <delete dir="${builddir}/pdepend"/>
         <delete dir="${builddir}/docs"/>
+        <delete dir="${basedir}/vendor"/>
     </target>
 
     <target name="prepare" depends="clean" description="Prepare for build">

@@ -1,4 +1,6 @@
 <?php
+namespace Etechnika\PhlymailDe;
+
 /**
  * UCTC - The Unicode Transcoder
  *
