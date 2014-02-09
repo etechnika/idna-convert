@@ -7,3 +7,4 @@ build/code-browser
 build/docs
 build/pdepend
 travis/
+cache.properties

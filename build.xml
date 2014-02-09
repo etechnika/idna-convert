@@ -6,7 +6,7 @@
     <property name="builddir" value="${workspace}/build" />
 
     <target name="build"
-          depends="prepare,vendors,symfony2-coding-standard,parameters,lint,phploc,pdepend,phpcpd,phpmd-ci,phpcs-ci,phpdoc,phpunit,phpcb"/>
+          depends="prepare,vendors,parameters,lint,phpunit,phploc,pdepend,phpcpd,phpmd,phpmd-ci,phpcs-ci,phpcb,phpdoc"/>
 
     <target name="build-parallel" depends="prepare,lint,tools-parallel,phpunit,phpcb"/>
 
@@ -14,6 +14,7 @@
         <parallel threadCount="2">
             <sequential>
                 <antcall target="pdepend"/>
+                <antcall target="phpmd"/>
                 <antcall target="phpmd-ci"/>
             </sequential>
             <antcall target="phpcpd"/>
@@ -24,6 +25,7 @@
     </target>
 
     <target name="clean" description="Cleanup build artifacts">
+        <delete dir="${basedir}/vendor"/>
         <delete dir="${builddir}/api"/>
         <delete dir="${builddir}/code-browser"/>
         <delete dir="${builddir}/coverage"/>
@@ -34,11 +36,31 @@
     </target>
 
     <target name="prepare" depends="clean" description="Prepare for build">
+        <mkdir dir="${basedir}/vendor"/>
         <mkdir dir="${builddir}/api"/>
         <mkdir dir="${builddir}/code-browser"/>
         <mkdir dir="${builddir}/coverage"/>
         <mkdir dir="${builddir}/logs"/>
         <mkdir dir="${builddir}/pdepend"/>
+    </target>
+
+    <target name="vendors" description="Install vendors">
+        <exec executable="php" failonerror="true">
+            <arg value="bin/composer.phar" />
+            <arg value="install" />
+        </exec>
+        <exec executable="git" failonerror="true" description="Install Symfony2 coding standard to phpcs">
+            <arg value="clone" />
+            <arg value="https://github.com/opensky/Symfony2-coding-standard.git" />
+            <arg value="${basedir}/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Symfony2" />
+        </exec>
+    </target>
+
+    <target name="parameters" description="Copy parameters">
+        <!--    <exec executable="cp" failonerror="true">
+          <arg path="app/config/parameters.yml.dist" />
+          <arg path="app/config/parameters.yml" />
+        </exec>-->
     </target>
 
     <target name="lint" description="Perform syntax check of sourcecode files">
@@ -137,27 +159,4 @@
             <arg path="${builddir}/code-browser" />
         </exec>
     </target>
-
-    <target name="vendors" description="Install vendors">
-        <exec executable="php" failonerror="true">
-            <arg value="bin/composer.phar" />
-            <arg value="install" />
-        </exec>
-    </target>
-
-    <target name="parameters" description="Copy parameters">
-        <!--    <exec executable="cp" failonerror="true">
-          <arg path="app/config/parameters.yml.dist" />
-          <arg path="app/config/parameters.yml" />
-        </exec>-->
-    </target>
-
-    <target name="symfony2-coding-standard" description="Isntall Symfony2 coding standard to phpcs">
-        <exec executable="git" failonerror="true">
-            <arg value="clone" />
-            <arg value="https://github.com/opensky/Symfony2-coding-standard.git" />
-            <arg value="${basedir}/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Symfony2" />
-        </exec>
-    </target>
-
 </project>
