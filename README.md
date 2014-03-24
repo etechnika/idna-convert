@@ -31,6 +31,7 @@ The following example describes basic usage.
 	<?php
 
 	require_once('vendor/autoload.php');
+	use Etechnika\IdnaConvert\IdnaConvert as IdnaConvert;
     IdnaConvert::encodeString( 'żółw.pl' ); // prints 'xn--w-uga1v8h.pl'
     IdnaConvert::decodeString( 'xn--w-uga1v8h.pl' ); // prints 'żółw.pl'
 
