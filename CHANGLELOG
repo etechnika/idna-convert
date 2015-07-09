@@ -1,3 +1,7 @@
+1.1.0 - 2015.07.09
+Update IDNA Convert version from 0.8.1 to 0.9.0
+Composer depdendency update
+
 1.0.1 - 2013.12.05
 Change coding standard to Symofny 2
 Add Jenkins build configuration.

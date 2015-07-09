@@ -50,7 +50,7 @@
         </exec>
         <exec executable="git" failonerror="true" description="Install Symfony2 coding standard to phpcs">
             <arg value="clone" />
-            <arg value="https://github.com/opensky/Symfony2-coding-standard.git" />
+            <arg value="https://github.com/escapestudios/Symfony2-coding-standard.git" />
             <arg value="${basedir}/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Symfony2" />
         </exec>
     </target>
@@ -135,8 +135,8 @@
         </exec>
     </target>
 
-    <target name="phpdoc" description="Generate API documentation using phpDox">
-        <exec executable="phpdoc">
+    <target name="phpdoc" description="Generate API documentation using phpDoc">
+        <exec executable="${basedir}/vendor/bin/phpdoc">
             <arg line="-d '${sourcedir}' -t '${builddir}/docs' --title='Tempo' " />
         </exec>
     </target>
