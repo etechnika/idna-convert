@@ -18,7 +18,7 @@
     },
     "require-dev": {
         "fabpot/php-cs-fixer": "~1.0",
-        "mayflower/php-codebrowser": "1.1",
+        "mayflower/php-codebrowser": "~1.1",
         "pdepend/pdepend": "~2.0",
         "phpdocumentor/phpdocumentor": "~2.0",
         "phploc/phploc": "~2.0",
