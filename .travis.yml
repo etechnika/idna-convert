@@ -1,4 +1,8 @@
 language: php
+
+before_script:
+  - composer self-update
+
 php:
   - hhvm
   - 7.0
