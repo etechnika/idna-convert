@@ -1,10 +1,8 @@
 !.gitignore
 vendor
 composer.lock
-build/coverage
-build/logs
-build/code-browser
-build/docs
-build/pdepend
+/bin/
+/var/
+/build/
 travis/
 cache.properties
