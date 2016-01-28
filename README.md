@@ -9,6 +9,8 @@ IDNA Convert is a fork of phlyLabs pure PHP IDNA Converter (http://idnaconv.phly
 It converts  internationalized domain names between UTF-8 and ASCII (punycode) notation.
 Orginal package is in directory lib/phlylabs.
 
+**You should used orginal package mso/idna-convert (https://github.com/phlylabs/idna-convert)**
+
 ## Installation
 
 ### Via composer

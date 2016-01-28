@@ -1,161 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="Idna converter" default="build">
-    <property name="workspace" value="${basedir}" />
-    <property name="sourcedir" value="${basedir}/src" />
-    <property name="builddir" value="${workspace}/build" />
+<project name="Idna converter" default="validation:full">
+    <property name="dir:root" value="${application.startdir}"/>
+    <property name="dir:var" value="${dir:root}/var"/>
+    <property name="dir:test-results" value="${dir:var}/tests"/>
+    <property name="threads" value="0" override="true"/>
 
-    <target name="build"
-          depends="prepare,vendors,parameters,lint,phpunit,phploc,pdepend,phpcpd,phpmd,phpmd-ci,phpcs-ci,phpcb,phpdoc"/>
+    <fileset dir="${dir:root}/src" id="source_files">
+        <include name="**/*.php"/>
+    </fileset>
 
-    <target name="build-parallel" depends="prepare,lint,tools-parallel,phpunit,phpcb"/>
-
-    <target name="tools-parallel" description="Run tools in parallel">
-        <parallel threadCount="2">
-            <sequential>
-                <antcall target="pdepend"/>
-                <antcall target="phpmd"/>
-                <antcall target="phpmd-ci"/>
-            </sequential>
-            <antcall target="phpcpd"/>
-            <antcall target="phpcs-ci"/>
-            <antcall target="phploc"/>
-            <antcall target="phpdoc"/>
+    <target name="validation:full" description="Run all validations" depends="detect-cpus, remove:test-results">
+        <parallel threadCount="${threads}">
+            <phingcall target="validation:phpunit"/>
+            <phingcall target="validation:phpunit-coverage"/>
+            <phingcall target="validation:coding-standard"/>
+            <phingcall target="validation:mess-detect"/>
+            <phingcall target="validation:copy-paste-detect"/>
+            <phingcall target="validation:lint"/>
+            <phingcall target="validation:phpdcd"/>
         </parallel>
+        <echo msg="Success: All validation done."/>
     </target>
 
-    <target name="clean" description="Cleanup build artifacts">
-        <delete dir="${basedir}/vendor"/>
-        <delete dir="${builddir}/api"/>
-        <delete dir="${builddir}/code-browser"/>
-        <delete dir="${builddir}/coverage"/>
-        <delete dir="${builddir}/logs"/>
-        <delete dir="${builddir}/pdepend"/>
-        <delete dir="${builddir}/docs"/>
+    <target name="validation:coding-standard" description="Checks PHP coding standard with php code sniffer.">
+        <property name="phpcodesniffer-output-xml" value=""/>
+
+        <phpcodesniffer standard="PSR2" allowedFileExtensions="php">
+            <fileset refid="source_files"/>
+            <formatter type="checkstyle" outfile="${dir:test-results}/phpcs.xml"/>
+        </phpcodesniffer>
+
+        <echo msg="Done: validation:coding-standard"/>
     </target>
 
-    <target name="prepare" depends="clean" description="Prepare for build">
-        <mkdir dir="${basedir}/vendor"/>
-        <mkdir dir="${builddir}/api"/>
-        <mkdir dir="${builddir}/code-browser"/>
-        <mkdir dir="${builddir}/coverage"/>
-        <mkdir dir="${builddir}/logs"/>
-        <mkdir dir="${builddir}/pdepend"/>
+    <target name="validation:mess-detect" description="Mess detection in PHP code.">
+        <property name="phpmd-output-xml" value="${dir:test-results}/phpmd.xml"/>
+
+        <phpmd rulesets="codesize,unusedcode,controversial,design">
+            <fileset refid="source_files"/>
+            <formatter type="xml" outfile="${phpmd-output-xml}"/>
+        </phpmd>
+
+        <echo msg="Done: validation:mess-detect"/>
     </target>
 
-    <target name="vendors" description="Install vendors">
-        <exec executable="php" failonerror="true">
-            <arg value="bin/composer.phar" />
-            <arg value="install" />
+    <target name="validation:copy-paste-detect" description="Checks similar PHP code blocks.">
+        <property name="phpcpd-output-xml" value="${dir:test-results}/phpcpd.xml"/>
+
+        <phpcpd>
+            <fileset refid="source_files"/>
+            <formatter type="pmd" outfile="${phpcpd-output-xml}"/>
+        </phpcpd>
+
+        <echo msg="Done: validation:copy-paste-detect"/>
+    </target>
+
+    <target name="validation:phpunit" description="PHP unit and integration tests">
+        <exec command="bin/phpunit"
+              output="${dir:test-results}/phpunit.log"
+              error="${dir:test-results}/phpunit.err"
+              level="error"
+              checkreturn="true"/>
+
+        <echo msg="Done: validation:phpunit"/>
+    </target>
+
+    <target name="validation:phpunit-coverage" description="PHP unit coverage">
+        <exec command="bin/phpunit --coverage-clover ${dir:test-results}/phpunit-coverage.xml --coverage-html ${dir:test-results}/phpunit-coverage/"
+              output="${dir:test-results}/phpunit-coverage.log"
+              error="${dir:test-results}/phpunit-coverage.err"
+              level="error"
+              checkreturn="true"/>
+
+        <echo msg="Done: validation:phpunit-coverage"/>
+    </target>
+
+    <target name="validation:lint" description="Perform syntax check of PHP sourcecode files">
+        <exec executable="${dir:root}/bin/phing"
+              output="${dir:test-results}/phplint.log"
+              error="${dir:test-results}/phplint.err"
+              checkreturn="true"
+              level="error">
+            <arg line="validation:lint:target"/>
         </exec>
-        <exec executable="git" failonerror="true" description="Install Symfony2 coding standard to phpcs">
-            <arg value="clone" />
-            <arg value="https://github.com/escapestudios/Symfony2-coding-standard.git" />
-            <arg value="${basedir}/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Symfony2" />
+        <echo msg="Done: validation:lint"/>
+    </target>
+
+    <target name="validation:lint:target" hidden="true">
+        <phplint haltonfailure="true"
+                 level="error"
+                 deprecatedAsError="true">
+            <fileset refid="source_files"/>
+        </phplint>
+    </target>
+
+    <target name="validation:phpdcd" description="PHP Dead Code Detector">
+        <exec dir="${dir:root}/src"
+              executable="${dir:root}/bin/phpdcd"
+              output="${dir:test-results}/phpdcd.log"
+              error="${dir:test-results}/phpdcd.err">
+            <arg line="--recursive"/>
+            <arg line="${dir:root}/src"/>
         </exec>
+        <echo msg="Done: validation:phpdcd"/>
     </target>
 
-    <target name="parameters" description="Copy parameters">
-        <!--    <exec executable="cp" failonerror="true">
-          <arg path="app/config/parameters.yml.dist" />
-          <arg path="app/config/parameters.yml" />
-        </exec>-->
+    <target name="remove:test-results" description="Clean tests artifacts directory" hidden="true">
+        <delete includeemptydirs="true" dir="${dir:test-results}" failonerror="true" quiet="true"/>
+        <mkdir dir="${dir:test-results}" description="Create test cache directory"/>
+        <echo msg="Success: Directory ${dir:test-results} is clean."/>
     </target>
 
-    <target name="lint" description="Perform syntax check of sourcecode files">
-        <apply executable="php" failonerror="true">
-            <arg value="-l" />
-            <fileset dir="${sourcedir}">
-                <include name="**/*.php" />
-                <modified />
-            </fileset>
-            <fileset dir="${basedir}/src/">
-                <include name="**/*Test.php" />
-                <modified />
-            </fileset>
-        </apply>
-    </target>
-
-    <target name="phploc" description="Measure project size using PHPLOC">
-        <exec executable="${basedir}/vendor/bin/phploc">
-            <arg value="--log-csv" />
-            <arg value="${builddir}/logs/phploc.csv" />
-            <arg path="${sourcedir}" />
+    <target name="detect-cpus" hidden="true">
+        <exec executable="nproc"
+              outputProperty="threads"
+              checkreturn="false"
+              level="info">
         </exec>
-    </target>
-
-    <target name="pdepend" description="Calculate software metrics using PHP_Depend">
-        <exec executable="${basedir}/vendor/bin/pdepend">
-            <arg value="--jdepend-xml=${builddir}/logs/jdepend.xml" />
-            <arg value="--jdepend-chart=${builddir}/pdepend/dependencies.svg" />
-            <arg value="--overview-pyramid=${builddir}/pdepend/overview-pyramid.svg" />
-            <arg path="${sourcedir}" />
-        </exec>
-    </target>
-
-    <target name="phpmd" description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
-        <exec executable="${basedir}/vendor/bin/phpmd">
-            <arg path="${basedir}/src" />
-            <arg value="text" />
-            <arg value="${workspace}/build/config/phpmd.xml" />
-        </exec>
-    </target>
-
-    <target name="phpmd-ci" description="Perform project mess detection using PHPMD creating a log file for the continuous integration server">
-        <exec executable="${basedir}/vendor/bin/phpmd">
-            <arg path="${sourcedir}" />
-            <arg value="xml" />
-            <arg value="${workspace}/build/config/phpmd.xml" />
-            <arg value="--reportfile" />
-            <arg value="${builddir}/logs/pmd.xml" />
-        </exec>
-    </target>
-
-    <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
-        <exec executable="${basedir}/vendor/bin/phpcs">
-            <arg value="--standard=Symfony2" />
-            <arg path="${sourcedir}" />
-        </exec>
-    </target>
-
-    <target name="phpcs-ci" description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server">
-        <exec executable="${basedir}/vendor/bin/phpcs" output="/dev/null">
-            <arg value="--report=checkstyle" />
-            <arg value="--report-file=${builddir}/logs/checkstyle.xml" />
-            <arg value="--standard=Symfony2" />
-            <arg path="${sourcedir}" />
-        </exec>
-    </target>
-
-    <target name="phpcpd" description="Find duplicate code using PHPCPD">
-        <exec executable="${basedir}/vendor/bin/phpcpd">
-            <arg value="--log-pmd" />
-            <arg value="${builddir}/logs/pmd-cpd.xml" />
-            <arg path="${sourcedir}" />
-        </exec>
-    </target>
-
-    <target name="phpdoc" description="Generate API documentation using phpDoc">
-        <exec executable="${basedir}/vendor/bin/phpdoc">
-            <arg line="-d '${sourcedir}' -t '${builddir}/docs' --title='Tempo' " />
-        </exec>
-    </target>
-
-    <target name="phpunit" description="Run unit tests with PHPUnit">
-        <exec executable="${basedir}/vendor/bin/phpunit" failonerror="true">
-            <arg value="-c" />
-            <arg path="${basedir}/jenkins.phpunit.xml" />
-        </exec>
-    </target>
-
-    <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser">
-        <exec executable="${basedir}/vendor/bin/phpcb">
-            <arg value="--log" />
-            <arg path="${builddir}/logs" />
-            <arg value="--source" />
-            <arg path="${sourcedir}" />
-            <arg value="--output" />
-            <arg path="${builddir}/code-browser" />
-        </exec>
+        <echo msg="Detected ${threads} CPU(s)"/>
     </target>
 </project>
