@@ -1,8 +1,7 @@
 <?php
 namespace Etechnika\IdnaConvert;
 
-require_once( __DIR__ . DIRECTORY_SEPARATOR. '..' . DIRECTORY_SEPARATOR .'..' . DIRECTORY_SEPARATOR . '..'. DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR .'phlylabs' . DIRECTORY_SEPARATOR .'idna_convert.class.php' );
-use Etechnika\PhlymailDe\idna_convert;
+use \idna_convert;
 
 /**
  * Converter

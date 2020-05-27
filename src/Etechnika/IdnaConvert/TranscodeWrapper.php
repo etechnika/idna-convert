@@ -1,8 +1,6 @@
 <?php
 namespace Etechnika\IdnaConvert;
 
-require_once( __DIR__ . DIRECTORY_SEPARATOR. '..' . DIRECTORY_SEPARATOR .'..' . DIRECTORY_SEPARATOR . '..'. DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'phlylabs' . DIRECTORY_SEPARATOR . 'transcode_wrapper.php' );
-
 /**
  * Transcode wrapper
  *
@@ -25,7 +23,7 @@ class TranscodeWrapper
      */
     public static function encodeUtf8($strValue = '', $strEncoding = 'iso-8859-1', $booSafemode = false)
     {
-        return encode_utf8($strValue = '', $strEncoding = 'iso-8859-1', $booSafemode = false);
+        return \encode_utf8($strValue = '', $strEncoding = 'iso-8859-1', $booSafemode = false);
     }
 
     /**
@@ -43,7 +41,7 @@ class TranscodeWrapper
      */
     public static function decodeUtf8($strValue = '', $strEncoding = 'iso-8859-1', $booSafemode = false)
     {
-        return decode_utf8($strValue = '', $strEncoding = 'iso-8859-1', $booSafemode = false);
+        return \decode_utf8($strValue = '', $strEncoding = 'iso-8859-1', $booSafemode = false);
     }
 
     /**
@@ -57,7 +55,7 @@ class TranscodeWrapper
      */
     public static function mapW1252Iso88591($strValue = '')
     {
-        return map_w1252_iso8859_1($strValue = '');
+        return \map_w1252_iso8859_1($strValue = '');
     }
 
     /**
@@ -71,6 +69,6 @@ class TranscodeWrapper
      */
     public static function mapIso88591W1252($strValue = '')
     {
-        return map_iso8859_1_w1252($strValue = '');
+        return \map_iso8859_1_w1252($strValue = '');
     }
 }
