@@ -36,14 +36,10 @@ class IdnaConvertTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Etechnika\IdnaConvert\IdnaConvert::get
-     * @todo   Implement testGet().
      */
     public function testGet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertInstanceOf(IdnaConvert::class, IdnaConvert::get());
     }
 
     /**

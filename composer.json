@@ -19,7 +19,8 @@
         }
     },
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.6.0",
+        "algo26-matthias/idna-convert": "~0.9"
     },
     "require-dev": {
         "fabpot/php-cs-fixer": "~1.0",
@@ -37,7 +38,10 @@
         "squizlabs/php_codesniffer": "~2.0"
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "platform": {
+            "php": "5.6"
+        }
     },
     "suggest": {
         "monolog/monolog": "You should used orginal package mso/idna-convert"
